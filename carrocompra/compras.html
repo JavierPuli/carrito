@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de ropa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Tienda de ropa</h1>
+        <div class="barra_busqueda">
+        <form>
+            <label for="busqueda">Buscar en el carrito:</label>
+        <input type="text" id="busqueda" name="busqueda"/>
+        <button onclick="filterProduct()" type="button">Buscar</button>
+        </form>
+    </div>
+        <div class="theme-switcher">
+            <button onclick="changeTheme('light')">Tema claro</button>
+            <button onclick="changeTheme('dark')">Tema oscuro</button>
+        </div>
+    </header>
+
+    <div class="container">
+    <div id="contenedor">
+        <h2>Lista de productos</h2>
+        <div class="product" id="camiseta">
+            <img src="1.jpg" alt="Tshirt">
+            <div class="product-info">
+                <span>Camiseta</span>
+                <span>$20.00</span>
+                <select id="size-tshirt">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="addToCart('Camiseta', 20.00, document.getElementById('size-tshirt').value, 'camiseta')">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product" id="vaqueros">
+            <img src="2.jpg" alt="Jeans">
+            <div class="product-info">
+                <span>Vaqueros</span>
+                <span>$40.00</span>
+                <select id="size-jeans">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="addToCart('Vaqueros', 40.00, document.getElementById('size-jeans').value, 'vaqueros')">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product" id="abrigo">
+            <img src="3.jpg" alt="Jacket">
+            <div class="product-info">
+                <span>Abrigo</span>
+                <span>$60.00</span>
+                <select id="size-jacket">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="addToCart('Abrigo', 60.00, document.getElementById('size-jacket').value, 'abrigo')">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" id="calzonas">
+            <img src="4.jpg" alt="calzonas">
+            <div class="product-info">
+                <span>Calzonas</span>
+                <span>$15.00</span>
+                <select id="size-calzonas">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="addToCart('Calzonas', 15.00, document.getElementById('size-calzonas').value, 'calzonas')">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" id="calzoncillo">
+            <img src="6.jpg" alt="Calzoncillo">
+            <div class="product-info">
+                <span>Calzoncillo</span>
+                <span>$12.00</span>
+                <select id="size-calzoncillo">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="addToCart('Calzoncillo', 12.00, document.getElementById('size-calzoncillo').value, 'calzoncillo')">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" id="calcetines">
+            <img src="5.jpg" alt="calcetines">
+            <div class="product-info">
+                <span>Calcetines</span>
+                <span>$5.00</span>
+                <select id="size-calcetines">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="addToCart('Calcetines', 5.00, document.getElementById('size-calcetines').value, 'calcetines')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+        <h2>Carro de la compra</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Talla</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
+                    <th>Botones</th>
+                </tr>
+            </thead>
+            <tbody id="cart-body">
+            </tbody>
+        </table>
+        <div id="total-price">Total: $0.00</div>
+        <button onclick="clearCart()">Limpiar carro</button>
+        <button onclick="confirmPurchase()">Confirmar compra</button>
+    </div>
+
+    <footer>
+        &copy; 2025 Tienda de ropa
+    </footer>
+
+    <script src="script.js">
+    </script>
+</body>
+</html>
