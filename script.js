@@ -50,7 +50,7 @@
                 fila.innerHTML = `
                     <td>${item.producto}</td>
                     <td>${item.talla}</td>
-                    <td><input type="number" value="${item.quantity}" min="1" onchange="cargarcantidad('${item.producto}', '${item.talla}', this.value, '${item.product.toLowerCase()}')"></td>
+                    <td><input type="number" value="${item.quantity}" min="1" onchange="cargarcantidad('${item.producto}', '${item.talla}', this.value, '${item.producto.toLowerCase()}')"></td>
                     <td>$${item.precio}</td>
                     <td>$${subtotal}</td>
                     <td><button onclick="borrardelcarro('${item.producto}', '${item.talla}')">Borrar</button></td>
