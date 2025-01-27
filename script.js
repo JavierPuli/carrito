@@ -85,7 +85,7 @@
 
         function limpiarcarrito() {
             carrito = [];
-            updateCart();
+            alctualizarcarrito();
         }
 
         function confirmarcompra() {
