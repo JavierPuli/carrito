@@ -124,7 +124,7 @@
             if (cartCookie) {
                 carrito = JSON.parse(decodeURIComponent(cartCookie.split('=')[1]));
             }
-            updateCart();
+            actualizarcarrito();
         }
 
         function guardarstock() {
