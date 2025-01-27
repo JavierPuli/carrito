@@ -1,5 +1,5 @@
-  let cart = [];
-        let theme = 'light';
+  let carrito = [];
+        let tema = 'light';
         let stock = {
             camiseta: { S: 4, M: 4, L: 4 },
             vaqueros: { S: 4, M: 4, L: 4 },
@@ -16,122 +16,122 @@
             let calzoncillo=document.getElementById('calzoncillo');
             let calcetines=document.getElementById('calcetines');
 
-        function addToCart(product, price, size, productKey) {
-            const availableStock = stock[productKey][size];
-            const existingProduct = cart.find(item => item.product === product && item.size === size);
+        function añadiralcarrito(producto, precio, talla, id) {
+            const Stockdisponible = stock[id][talla];
+            const productoexistente = carrito.find(item => item.producto === producto && item.talla === talla);
 
-            if (availableStock > 0) {
-                if (existingProduct) {
-                    if (existingProduct.quantity < availableStock) {
-                        existingProduct.quantity++;
+            if (Stockdisponible > 0) {
+                if (productoexistente) {
+                    if (productoexistente.quantity < availableStock) {
+                        productoexistente.quantity++;
                     } else {
                         alert('Stock insuficiente para esta talla.');
                         return;
                     }
                 } else {
-                    cart.push({ product, price, size, quantity: 1 });
+                    carrito.push({ producto, precio, talla, quantity: 1 });
                 }
-                updateCart();
+                alctualizarcarrito();
             } else {
                 alert('Sin stock.');
             }
         }
 
-        function updateCart() {
-            const cartBody = document.getElementById('cart-body');
-            cartBody.innerHTML = '';
+        function actualizarcarrito() {
+            const carritoBody = document.getElementById('carrito-body');
+            carritoBody.innerHTML = '';
 
             let total = 0;
-            cart.forEach(item => {
-                const subtotal = item.price * item.quantity;
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.quantity;
                 total += subtotal;
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.product}</td>
-                    <td>${item.size}</td>
-                    <td><input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.product}', '${item.size}', this.value, '${item.product.toLowerCase()}')"></td>
-                    <td>$${item.price}</td>
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${item.producto}</td>
+                    <td>${item.talla}</td>
+                    <td><input type="number" value="${item.quantity}" min="1" onchange="cargarcantidad('${item.producto}', '${item.talla}', this.value, '${item.product.toLowerCase()}')"></td>
+                    <td>$${item.precio}</td>
                     <td>$${subtotal}</td>
-                    <td><button onclick="removeFromCart('${item.product}', '${item.size}')">Borrar</button></td>
+                    <td><button onclick="borrardelcarro('${item.producto}', '${item.talla}')">Borrar</button></td>
                 `;
-                cartBody.appendChild(row);
+                carritoBody.appendChild(fila);
             });
 
-            document.getElementById('total-price').textContent = `Total: $${total}`;
-            saveCart();
+            document.getElementById('precio-total').textContent = `Total: ${total}€`;
+            guardarcarrito();
         }
 
-        function updateQuantity(product, size, quantity, productKey) {
-            const item = cart.find(item => item.product === product && item.size === size);
+        function cargarcantidad(producto, talla, quantity, id) {
+            const item = carrito.find(item => item.producto === producto && item.talla === talla);
 
             if (item) {
-                const availableStock = stock[productKey][size];
-                if (quantity <= availableStock) {
+                const Stockdisponible = stock[id][talla];
+                if (quantity <= Stockdisponible) {
                     item.quantity = parseInt(quantity);
                 } else {
                     alert('Stock insuficiente para esta talla.');
-                    item.quantity = availableStock;
+                    item.quantity = Stockdisponible;
                 }
             }
 
+            actualizarcarrito();
+        }
+
+        function borrardelcarro(producto, talla) {
+            carrito = carrito.filter(item => !(item.producto === producto && item.talla === talla));
+            actualizarcarrito();
+        }
+
+        function limpiarcarrito() {
+            carrito = [];
             updateCart();
         }
 
-        function removeFromCart(product, size) {
-            cart = cart.filter(item => !(item.product === product && item.size === size));
-            updateCart();
-        }
+        function confirmarcompra() {
+            let fueradeStock = false;
 
-        function clearCart() {
-            cart = [];
-            updateCart();
-        }
-
-        function confirmPurchase() {
-            let outOfStock = false;
-
-            cart.forEach(item => {
-                const productKey = item.product.toLowerCase();
-                if (stock[productKey][item.size] >= item.quantity) {
-                    stock[productKey][item.size] -= item.quantity;
+            carrito.forEach(item => {
+                const id = item.producto.toLowerCase();
+                if (stock[id][item.talla] >= item.quantity) {
+                    stock[id][item.talla] -= item.quantity;
                 } else {
-                    outOfStock = true;
-                    alert(`Stock insuficiente para ${item.product} (${item.size}). Compra cancelada.`);
+                    fueradeStock = true;
+                    alert(`Stock insuficiente para ${item.producto} (${item.talla}). Compra cancelada.`);
                 }
             });
 
-            if (!outOfStock) {
+            if (!fueradeStock) {
                 alert('Compra realiza.');
-                clearCart();
-                saveStock();
+                limpiarcarrito();
+                guardarstock();
             }
         }
 
-        function changeTheme(newTheme) {
-            theme = newTheme;
-            document.body.className = newTheme === 'dark' ? 'theme-dark' : '';
-            saveTheme();
+        function cambiartema(nuevotema) {
+            tema = nuevotema;
+            document.body.className = nuevotema === 'dark' ? 'theme-dark' : '';
+            guardartema();
         }
 
-        function saveCart() {
-            document.cookie = `cart=${encodeURIComponent(JSON.stringify(cart))}; path=/`;
+        function guardarcarrito() {
+            document.cookie = `carrito=${encodeURIComponent(JSON.stringify(carrito))}; path=/`;
         }
 
-        function loadCart() {
+        function cargarcarrito() {
             const cookies = document.cookie.split('; ');
-            const cartCookie = cookies.find(row => row.startsWith('cart='));
+            const cartCookie = cookies.find(row => row.startsWith('carrito='));
             if (cartCookie) {
-                cart = JSON.parse(decodeURIComponent(cartCookie.split('=')[1]));
+                carrito = JSON.parse(decodeURIComponent(cartCookie.split('=')[1]));
             }
             updateCart();
         }
 
-        function saveStock() {
+        function guardarstock() {
             document.cookie = `stock=${encodeURIComponent(JSON.stringify(stock))}; path=/`;
         }
 
-        function loadStock() {
+        function cargarStock() {
             const cookies = document.cookie.split('; ');
             const stockCookie = cookies.find(row => row.startsWith('stock='));
             if (stockCookie) {
@@ -139,26 +139,26 @@
             }
         }
 
-        function saveTheme() {
-            document.cookie = `theme=${theme}; path=/`;
+        function guardartema() {
+            document.cookie = `tema=${tema}; path=/`;
         }
 
-        function loadTheme() {
+        function cargartema() {
             const cookies = document.cookie.split('; ');
-            const themeCookie = cookies.find(row => row.startsWith('theme='));
-            if (themeCookie) {
-                theme = themeCookie.split('=')[1];
-                document.body.className = theme === 'dark' ? 'theme-dark' : '';
+            const temaCookie = cookies.find(row => row.startsWith('tema='));
+            if (temaCookie) {
+                tema = temaCookie.split('=')[1];
+                document.body.className = tema === 'dark' ? 'theme-dark' : '';
             }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            loadCart();
-            loadTheme();
-            loadStock();
+            cargarcarrito();
+            cargartema();
+            cargarStock();
         });
 
-        function filterProduct(){   
+        function filtrarproducto(){   
             let busqueda= document.getElementById('busqueda').value;
             window.alert(busqueda);
             let container=document.getElementById('contenedor');

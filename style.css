@@ -29,7 +29,7 @@ header {
     color: var(--button-text);
 }
 
-.theme-switcher button {
+.cambiadordetema button {
     margin-left: 10px;
     padding: 10px;
     background-color: var(--button-bg);
@@ -48,13 +48,13 @@ header {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.product {
+.producto {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.product img {
+.producto img {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -62,7 +62,7 @@ header {
     border-radius: 5px;
 }
 
-.product-info {
+.producto-info {
     display: flex;
     flex-direction: column;
 }
