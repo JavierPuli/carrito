@@ -31,7 +31,7 @@
                 } else {
                     carrito.push({ producto, precio, talla, quantity: 1 });
                 }
-                alctualizarcarrito();
+                actualizarcarrito();
             } else {
                 alert('Sin stock.');
             }
