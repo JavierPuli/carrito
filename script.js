@@ -16,13 +16,13 @@
             let calzoncillo=document.getElementById('calzoncillo');
             let calcetines=document.getElementById('calcetines');
 
-        function añadiralcarrito(producto, precio, talla, id) {
+        function anadiralcarrito(producto, precio, talla, id) {
             const Stockdisponible = stock[id][talla];
             const productoexistente = carrito.find(item => item.producto === producto && item.talla === talla);
 
             if (Stockdisponible > 0) {
                 if (productoexistente) {
-                    if (productoexistente.quantity < availableStock) {
+                    if (productoexistente.quantity < Stockdisponible) {
                         productoexistente.quantity++;
                     } else {
                         alert('Stock insuficiente para esta talla.');
